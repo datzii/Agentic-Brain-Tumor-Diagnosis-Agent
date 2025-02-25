@@ -7,8 +7,10 @@ if __name__ == "__main__":
     create_agent()
 
     while True:
-        print('------------ USER ------------')
+        print('------------------------ USER ------------------------\n>> ', end='')
         prompt = input()
-        print('------------ AI AGENT ------------')
+        print('---------------------- AI AGENT ----------------------')
         response = make_agent_query(prompt)
-        print(response)
+        print('<<', response)
+        if 'BYE' in prompt:
+            break
