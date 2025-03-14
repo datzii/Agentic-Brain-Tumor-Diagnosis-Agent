@@ -46,6 +46,7 @@ input = "Can you tell me if I have brain cancer? I am not feeling well and I wan
 
 
 def make_agent_query(input: str) -> str:
+    create_agent()
     result = asyncio.run(execute_assitant_query(input))  # Run the async function
     return result
 
