@@ -6,6 +6,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 import config.config as config
 from services.agents import make_agent_query
+from services.short_term_memory import delete_state
 
 
 app = Flask(__name__)
@@ -33,10 +34,22 @@ def status():
 @cross_origin()
 def make_query():
     data = request.json
-    input = data.get('input')
-    print(input)
-    response = make_agent_query(input)
+    print(data)
+    input = data.get('input', '')
+    chat_id = data.get('chat_id', '')
+    image_path = data.get('image_path', '')
+ 
+    response = make_agent_query(chat_id, input, image_path)
     return response
+
+@app.route("/agent/leave_room", methods = ['POST'])
+@cross_origin()
+def leave_room():
+    data = request.json
+    print(data)
+    chat_id = data.get('chat_id', '')
+    delete_state(chat_id)
+    return "state deleted " + chat_id
 
 
 @app.after_request
