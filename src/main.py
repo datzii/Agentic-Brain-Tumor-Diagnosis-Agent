@@ -38,8 +38,9 @@ def make_query():
     input = data.get('input', '')
     chat_id = data.get('chat_id', '')
     image_path = data.get('image_path', '')
+    engine = data.get('engine', '')
  
-    response = make_agent_query(chat_id, input, image_path)
+    response = make_agent_query(chat_id, input, image_path, engine)
     return response
 
 @app.route("/agent/leave_room", methods = ['POST'])

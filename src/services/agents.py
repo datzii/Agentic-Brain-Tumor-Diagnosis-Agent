@@ -3,15 +3,17 @@ from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.messages import TextMessage
 from autogen_agentchat.ui import Console
 from autogen_core import CancellationToken
-from autogen_ext.models.openai import OpenAIChatCompletionClient
+from autogen_ext.models.openai import OpenAIChatCompletionClient, AzureOpenAIChatCompletionClient
 from services.tools import classify_brain_tumor_from_MRI
 from services.short_term_memory import delete_state, save_state, get_state, check_state_exists
 
-def create_agent():
+def create_agent(engine: str):
+    
+    
     model_client = OpenAIChatCompletionClient(
-        model="qwen2.5:7b",
-        base_url="http://localhost:11434/v1",
-        api_key="placeholder",
+        model=engine,
+        base_url="http://localhost:4000",
+        api_key="sk-1234",
         model_info={
             "vision": False,
             "function_calling": True,
@@ -19,6 +21,7 @@ def create_agent():
             "family": "unknown",
         },
     )
+
     global agent
 
     agent = AssistantAgent(
@@ -53,8 +56,8 @@ file_path = '/mnt/c/Users/Usuario/Desktop/MASTER/TFM/cleaned/Testing/images/Te-n
 input = "Can you tell me if I have brain cancer? I am not feeling well and I want to be sure if anything is wrong with me. The MRI image of my brain is located in " + file_path
 
 
-def make_agent_query(chat_id: str, input: str, image_path: str) -> str:
-    create_agent()
+def make_agent_query(chat_id: str, input: str, image_path: str, engine: str) -> str:
+    create_agent(engine)
     query = create_query(input, image_path)
     print(query)
     result = asyncio.run(execute_assitant_query(chat_id, query))  # Run the async function
