@@ -3,17 +3,17 @@ from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.messages import TextMessage
 from autogen_agentchat.ui import Console
 from autogen_core import CancellationToken
-from autogen_ext.models.openai import OpenAIChatCompletionClient, AzureOpenAIChatCompletionClient
+from autogen_ext.models.openai import OpenAIChatCompletionClient
 from services.tools import classify_brain_tumor_from_MRI
 from services.short_term_memory import delete_state, save_state, get_state, check_state_exists
+from common.config import LITELLM_ENDPOINT, LITELLM_APIKEY
 
-def create_agent(engine: str):
-    
+def create_agent(engine: str):    
     
     model_client = OpenAIChatCompletionClient(
         model=engine,
-        base_url="http://localhost:4000",
-        api_key="sk-1234",
+        base_url=LITELLM_ENDPOINT,
+        api_key=LITELLM_APIKEY,
         model_info={
             "vision": False,
             "function_calling": True,
@@ -59,7 +59,7 @@ input = "Can you tell me if I have brain cancer? I am not feeling well and I wan
 def make_agent_query(chat_id: str, input: str, image_path: str, engine: str) -> str:
     create_agent(engine)
     query = create_query(input, image_path)
-    print(query)
+    #print(query)
     result = asyncio.run(execute_assitant_query(chat_id, query))  # Run the async function
     return result
 

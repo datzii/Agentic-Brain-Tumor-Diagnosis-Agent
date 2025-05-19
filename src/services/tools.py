@@ -1,6 +1,6 @@
 import requests
 import json
-import config.config as config
+import common.config as config
 
 def classify_brain_tumor_from_MRI(image_path: str) -> str:
     ''' Classifies brain tumor of the specific image '''
