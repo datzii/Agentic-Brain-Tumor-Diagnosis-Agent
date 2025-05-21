@@ -9,6 +9,9 @@ from services.agent_service import make_agent_query
 from services.short_term_memory import delete_state
 from services.tool_service import init_mcp_server
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 
 app = Flask(__name__)
 CORS(app,
