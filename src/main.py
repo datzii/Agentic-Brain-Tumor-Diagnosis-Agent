@@ -4,7 +4,7 @@ import time
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-import config.config as config
+import common.config as config
 from services.agents import make_agent_query
 from services.short_term_memory import delete_state
 
