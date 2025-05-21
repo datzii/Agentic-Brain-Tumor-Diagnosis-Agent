@@ -5,8 +5,9 @@ import time
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 import common.config as config
-from services.agents import make_agent_query
+from services.agent_service import make_agent_query
 from services.short_term_memory import delete_state
+from services.tool_service import init_mcp_server
 
 
 app = Flask(__name__)
@@ -58,6 +59,13 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', "Content-Type, Authorization, X-Auth-Token")
     response.headers.add('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE, OPTIONS")
     return response
+
+
+try:
+    init_mcp_server()
+except Exception as err:
+    print(f'Error connecting to MCP Server - {err}')
+
 
 
 if __name__ == "__main__":

@@ -1,11 +1,9 @@
 import os
 
-diagnosis_url = 'http://localhost:5600/diagnosis_tool/get_prediction'
-headers = {
-    "Content-Type": "application/json"
-}
+MCP_SERVER = os.environ.get('MCP_SERVER', 'http://localhost:7600')
+mcp_sse_url = f'{MCP_SERVER}/sse'
 
-PORT = os.environ.get('server_port', '5700')
+PORT = os.environ.get('PORT', '5700')
 
 # LiteLLM variables
 LITELLM_ENDPOINT = os.environ.get('LITELLM_ENDPOINT', 'http://localhost:4000')

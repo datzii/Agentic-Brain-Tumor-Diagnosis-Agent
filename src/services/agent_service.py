@@ -4,9 +4,10 @@ from autogen_agentchat.messages import TextMessage
 from autogen_agentchat.ui import Console
 from autogen_core import CancellationToken
 from autogen_ext.models.openai import OpenAIChatCompletionClient
-from services.tools import classify_brain_tumor_from_MRI
+from services.tool_service import get_diagnosis_tool
 from services.short_term_memory import delete_state, save_state, get_state, check_state_exists
 from common.config import LITELLM_ENDPOINT, LITELLM_APIKEY
+from services.tool_service import get_diagnosis_tool
 
 def create_agent(engine: str):    
     
@@ -27,7 +28,7 @@ def create_agent(engine: str):
     agent = AssistantAgent(
         name="assistant",
         model_client=model_client,
-        tools=[classify_brain_tumor_from_MRI],
+        tools=get_diagnosis_tool(),
         system_message="You are a ReAct (Reasoning + Act) agent that will receive a request.\n" \
         "You have to decide if the request is just a simple chatting (Type Chatting) or if the request is related to a realize a brain tumor diagnosis. (Type Diagnosis) \n" \
         "If the request is of Type Chatting, you just need to answer the request\n"

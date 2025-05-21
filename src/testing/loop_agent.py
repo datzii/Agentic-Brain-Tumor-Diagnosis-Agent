@@ -1,6 +1,12 @@
-from services.agents import create_agent, make_agent_query
+from services.agent_service import create_agent, make_agent_query
+from services.tool_service import init_mcp_server
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
+
+try:
+    init_mcp_server()
+except Exception as err:
+    print(f'Error connecting to MCP Server - {err}')
 
 while True:
     print('------------------------------------ USER ------------------------------------\n>> ', end='')
