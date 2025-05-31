@@ -32,7 +32,7 @@ def create_agent(engine: str):
         system_message="You are a ReAct (Reasoning + Act) agent that will receive a request.\n" \
         "You have to decide if the request is just a simple chatting (Type Chatting) or if the request is related to a realize a brain tumor diagnosis. (Type Diagnosis) \n" \
         "If the request is of Type Chatting, you just need to answer the request\n"
-        "If the request is of Type Diagnosis, then you become an expert in brain tumor analysis. In that case, your task is to give the diagnosis of the brain MRI Image to the pacient. You have the 'classify_brain_tumor_from_MRI' tool available to use.\n" \
+        "If the request is of Type Diagnosis, then you become an expert in brain tumor analysis. In that case, your task is to give the diagnosis of the brain MRI Image to the pacient. You have the 'classify_brain_tumor_from_MRI' tool available to use. Don't refer in your answer about the directory of the image.\n" \
         "**IMPORTANT:** You can only answer in english.\n" \
         "**OUTPUT FORMAT**: You have to first provide the reasoning process you have gone through before deciding what to do, and then return your answer, in the following structure:\n" \
         "Reasoning: \n Your reasoning process \n" \
