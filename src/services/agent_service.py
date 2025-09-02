@@ -9,8 +9,10 @@ from services.short_term_memory import delete_state, save_state, get_state, chec
 from common.config import LITELLM_ENDPOINT, LITELLM_APIKEY
 from services.tool_service import get_diagnosis_tool
 
+# Function to create the AI Agent
 def create_agent(engine: str):    
     
+    # Define LiteLLM connection depending on the LLM selected
     model_client = OpenAIChatCompletionClient(
         model=engine,
         base_url=LITELLM_ENDPOINT,
@@ -25,6 +27,7 @@ def create_agent(engine: str):
 
     global agent
 
+    # Define the Agent
     agent = AssistantAgent(
         name="assistant",
         model_client=model_client,
@@ -41,17 +44,21 @@ def create_agent(engine: str):
     )
 
 
+# Function to get the response of the agent
 async def execute_assitant_query(chat_id: str, input: str) -> str:
     global agent
 
+    # Loads short term memory
     if check_state_exists(chat_id):
         await agent.load_state(get_state(chat_id))
 
+    # Makes a response
     response = await agent.on_messages(
         [TextMessage(content=input, source="user")],
         cancellation_token=CancellationToken(),
     )
 
+    # Saves response in the short term memory
     state = await agent.save_state()
     save_state(chat_id, state)
 
@@ -60,10 +67,7 @@ async def execute_assitant_query(chat_id: str, input: str) -> str:
     #print(f"-- result {response.chat_message.content}")
     return response.chat_message.content
 
-file_path = '/mnt/c/Users/Usuario/Desktop/MASTER/TFM/cleaned/Testing/images/Te-no_0012.jpg'
-input = "Can you tell me if I have brain cancer? I am not feeling well and I want to be sure if anything is wrong with me. The MRI image of my brain is located in " + file_path
-
-
+# Init function to start the AI agent process
 def make_agent_query(chat_id: str, input: str, image_path: str, engine: str) -> str:
     create_agent(engine)
     query = create_query(input, image_path)

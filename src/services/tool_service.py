@@ -7,8 +7,9 @@ import mcp.types as types
 from typing_extensions import Self
 import common.config as config
 
-
+# List of MCP tools
 activated_tools_mcp = []
+
 
 class AgntticSseMcpToolAdapter(SseMcpToolAdapter):
 
@@ -42,7 +43,7 @@ class AgntticSseMcpToolAdapter(SseMcpToolAdapter):
   def __str__(cls):
     return cls._tool.__str__()
 
-
+# Starts the MCP server connection
 def init_mcp_server():
   print('innnit mcp')
   asyncer.runnify(_init_mcp_server)()
@@ -67,6 +68,7 @@ async def _init_mcp_server():
   activated_tools_mcp = adapter
 
 
+# Gets the diagnosis tool
 def get_diagnosis_tool():
     for tool in activated_tools_mcp:
         if tool.name == 'classify_brain_tumor_from_MRI':
