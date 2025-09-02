@@ -40,4 +40,5 @@ jobs:
 
       - name: Run tests
         run: |
+          export PYTHONPATH="${{ github.workspace }}/src"
           pytest
